@@ -1,0 +1,96 @@
+
+!pip install gTTS pydub -q
+!apt-get install -y -qq ffmpeg
+
+
+
+from gtts import gTTS
+from IPython.display import Audio
+
+
+
+text = """hello hello mic test"""
+print("Input text:\n", text)
+
+
+
+tts = gTTS(text, lang="en")
+tts.save("story_voice.mp3")
+
+
+
+Audio("story_voice.mp3")
+
+
+
+
+
+!pip install gTTS pydub -q
+!apt-get install -y -qq ffmpeg
+
+
+from gtts import gTTS
+text = "hello hello mic test mic test 1234 1234"
+tts = gTTS(text, lang="en")
+tts.save("voice.mp3")
+
+
+from pydub.generators import Sine
+from pydub import AudioSegment
+
+
+pad = Sine(220).to_audio_segment(duration=15000).apply_gain(-5)  
+voice = AudioSegment.from_file("voice.mp3").set_frame_rate(44100).set_channels(2)
+
+
+combined = pad.overlay(voice, position=1000)  # start after 1s
+combined.export("simple_music.wav", format="wav")
+
+
+from IPython.display import Audio
+Audio("simple_music.wav")
+
+
+
+
+from IPython.display import Audio
+Audio("simple_music.wav")
+
+
+
+
+!pip install gTTS pydub -q
+!apt-get install -y -qq ffmpeg
+
+
+from gtts import gTTS
+text = "Under the moonlight, the river sings softly with fireflies dancing above."
+tts = gTTS(text, lang="en")
+tts.save("voice.mp3")
+
+
+from pydub.generators import Sine
+from pydub import AudioSegment
+
+# Load your ambient sound file here, replace "your_ambient_sound.mp3" with the actual path
+# You might need to adjust the duration or loop the background audio
+# Reverted to using a sine wave as background music and increased the gain further
+pad = Sine(220).to_audio_segment(duration=15000).apply_gain(0) # Increased gain from -5 to 0
+voice = AudioSegment.from_file("voice.mp3").set_frame_rate(44100).set_channels(2)
+
+
+combined = pad.overlay(voice, position=1000)
+combined.export("simple_music.wav", format="wav")
+
+from IPython.display import Audio
+Audio("simple_music.wav")
+
+
+
+
+
+
+
+
+
+!ls
