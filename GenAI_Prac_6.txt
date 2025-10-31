@@ -1,0 +1,33 @@
+!pip install -q pillow==9.5.0
+
+from google.colab import files
+from PIL import Image
+import torch
+from transformers import BlipProcessor, BlipForConditionalGeneration
+
+from google.colab import files
+from PIL import Image
+import io
+print("Please upload an image (jpg/png)")
+uploaded = files.upload()
+image_path = list(uploaded.keys())[0]
+# Read the image from bytes using io.BytesIO
+image = Image.open(io.BytesIO(uploaded[image_path])).convert("RGB")
+
+inputs = processor(image, return_tensors="pt").to("cuda")
+out = model.generate(**inputs, max_length=30)
+caption = processor.decode(out[0], skip_special_tokens=True)
+
+print("\n Generated Description:")
+print(caption)
+
+from gtts import gTTS
+tts = gTTS(caption, lang="en")
+tts.save("image_speech.mp3")
+
+!pip install gtts
+
+from IPython.display import Audio, display
+print("\n Image analyzed and converted to speech successfully!")
+display(Audio("image_speech.mp3"))
+
